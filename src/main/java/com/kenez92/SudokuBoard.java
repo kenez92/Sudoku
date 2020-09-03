@@ -83,4 +83,22 @@ public class SudokuBoard {
         }
         return counter;
     }
+
+    public SudokuBoard deepClone() throws CloneNotSupportedException {
+        SudokuBoard clonedSudokuBoard = (SudokuBoard) super.clone();
+        clonedSudokuBoard.setSudokuRowList(new ArrayList<>(size));
+        for (SudokuRow sudokuRow : sudokuRowList) {
+            SudokuRow clonedSudokuRow = new SudokuRow(size);
+            for (int j = 0; j < sudokuRow.getSudokuElementList().size(); j++) {
+                SudokuElement sudokuElement = sudokuRow.getSudokuElementList().get(j);
+                clonedSudokuRow.getSudokuElementList().add(new SudokuElement(
+                        sudokuElement.getPositionX(),
+                        sudokuElement.getPositionY(),
+                        sudokuElement.getValue(),
+                        sudokuElement.getAvailableNumbers()));
+            }
+            clonedSudokuBoard.getSudokuRowList().add(clonedSudokuRow);
+        }
+        return clonedSudokuBoard;
+    }
 }
