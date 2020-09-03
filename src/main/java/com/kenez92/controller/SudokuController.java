@@ -19,4 +19,8 @@ public class SudokuController {
     public void badPlayerMove() {
         io.badPlayerMove();
     }
+
+    public boolean playAgain() {
+        return io.playAgain();
+    }
 }

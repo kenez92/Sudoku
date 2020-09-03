@@ -14,6 +14,8 @@ public class IO {
     private static final String ERR_BAD_VALUE = "Please put only numbers (x, y and value)";
     private static final String ERR_VALUE_IS_BIGGER_THAN_BOARD_SIZE = "Your number is bigger than board! Put properly numbers :";
     private static final String ERR_BAD_PLAYER_MOVE = "This field is not empty !";
+    private static final String INFO_PLAY_AGAIN = "Do you want to play again ? (y = yes, n = no)";
+    public static final String ERR_PLAY_AGAIN = "Please type 'y' to play again or 'n' to finish game";
     private final Scanner scanner = new Scanner(System.in);
 
     public int getSudokuSize() {
@@ -78,5 +80,20 @@ public class IO {
 
     public void badPlayerMove() {
         System.out.println(ERR_BAD_PLAYER_MOVE);
+    }
+
+    public boolean playAgain() {
+        System.out.println(INFO_PLAY_AGAIN);
+        String answer = scanner.nextLine();
+        while (true) {
+            if (answer.equals("y")) {
+                return false;
+            } else if (answer.equals("n")) {
+                return true;
+            } else {
+                System.out.println(ERR_PLAY_AGAIN);
+                answer = scanner.nextLine();
+            }
+        }
     }
 }

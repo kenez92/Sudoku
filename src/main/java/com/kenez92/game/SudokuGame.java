@@ -26,7 +26,7 @@ public class SudokuGame {
                 sudokuController.badPlayerMove();
             }
         } while (sudokuBoard.countEmptyFields() > 0);
-        return true; // temporary return true
+        return sudokuController.playAgain();
     }
 
     public boolean putNumberIntoBoard(List<Integer> playerMove) {
