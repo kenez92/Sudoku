@@ -1,4 +1,8 @@
-package com.kenez92;
+package com.kenez92.backtrack;
+
+import com.kenez92.exception.SudokuException;
+import com.kenez92.board.SudokuBoard;
+import com.kenez92.board.SudokuElement;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

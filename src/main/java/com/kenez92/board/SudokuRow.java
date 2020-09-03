@@ -1,4 +1,6 @@
-package com.kenez92;
+package com.kenez92.board;
+
+import com.kenez92.board.SudokuElement;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.kenez92;
+package com.kenez92.backtrack;
 
 public class LastMove {
     private final int positionX;

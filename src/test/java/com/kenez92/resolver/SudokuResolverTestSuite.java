@@ -1,5 +1,8 @@
-package com.kenez92;
+package com.kenez92.resolver;
 
+import com.kenez92.board.SudokuBoard;
+import com.kenez92.board.SudokuElement;
+import com.kenez92.resolver.SudokuResolver;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.kenez92;
+package com.kenez92.board;
 
 import java.util.ArrayList;
 import java.util.List;

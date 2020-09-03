@@ -1,4 +1,4 @@
-package com.kenez92;
+package com.kenez92.exception;
 
 public class SudokuException extends RuntimeException {
     public static final String ERR_SOMETHING_WENT_WRONG = "Something went wrong !";

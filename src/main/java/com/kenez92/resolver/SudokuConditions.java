@@ -1,4 +1,10 @@
-package com.kenez92;
+package com.kenez92.resolver;
+
+import com.kenez92.backtrack.BackTrack;
+import com.kenez92.backtrack.LastMove;
+import com.kenez92.board.SudokuBoard;
+import com.kenez92.board.SudokuElement;
+import com.kenez92.board.SudokuRow;
 
 import java.util.HashSet;
 

@@ -1,4 +1,7 @@
-package com.kenez92;
+package com.kenez92.controller;
+
+import com.kenez92.io.IO;
+import com.kenez92.board.SudokuBoard;
 
 import java.util.List;
 

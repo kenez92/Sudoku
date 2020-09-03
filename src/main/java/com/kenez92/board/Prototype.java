@@ -1,4 +1,4 @@
-package com.kenez92;
+package com.kenez92.board;
 
 public class Prototype<T> implements Cloneable {
     @Override

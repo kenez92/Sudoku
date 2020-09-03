@@ -1,5 +1,8 @@
-package com.kenez92;
+package com.kenez92.backtrack;
 
+import com.kenez92.backtrack.BackTrack;
+import com.kenez92.backtrack.LastMove;
+import com.kenez92.board.SudokuBoard;
 import org.junit.Assert;
 import org.junit.Test;
 
