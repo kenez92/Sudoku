@@ -48,4 +48,17 @@ public class BackTrack {
             return false;
         }
     }
+
+    public boolean doBackTrack(SudokuBoard sudokuBoard) {
+        if (BackTrack.getInstance().getSudokuBoards().size() > 0 && BackTrack.getInstance().getLastMoves().size() > 0) {
+            SudokuBoard backSudokuBoard = BackTrack.getInstance().getSudokuBoards().pollFirst();
+            LastMove lastMove = BackTrack.getInstance().getLastMoves().pollFirst();
+            SudokuElement sudokuElement = backSudokuBoard.getSudokuRowList().get(lastMove.getPositionY())
+                    .getSudokuElementList().get(lastMove.getPositionX());
+            sudokuElement.getAvailableNumbers().remove(Integer.valueOf(lastMove.getValue()));
+            sudokuBoard.setSudokuRowList(backSudokuBoard.getSudokuRowList());
+            return true;
+        }
+        return false;
+    }
 }

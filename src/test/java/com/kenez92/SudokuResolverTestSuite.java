@@ -69,6 +69,7 @@ public class SudokuResolverTestSuite {
                 blockLists.add(blockList);
             }
         }
+        System.out.println(sudokuBoard);
         //Then
         for (List<Integer> rowList : rowLists) {
             int size = rowList.size();

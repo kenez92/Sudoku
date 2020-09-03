@@ -3,7 +3,7 @@ package com.kenez92;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SudokuBoard {
+public class SudokuBoard extends Prototype {
     private List<SudokuRow> sudokuRowList;
     private final int size;
     private final int sizeOfOneBlock;

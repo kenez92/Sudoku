@@ -3,6 +3,7 @@ package com.kenez92;
 public class SudokuResolver {
     private final NumberRemover numberRemover = new NumberRemover();
     private final SudokuConditions conditions = new SudokuConditions();
+    private final SudokuRandomValue sudokuRandomValue = new SudokuRandomValue();
 
     public void process(SudokuBoard sudokuBoard) {
         boolean result = false;
@@ -22,7 +23,7 @@ public class SudokuResolver {
                 }
             }
             if (!conditionResult) {
-                // set random value in available number
+                result = sudokuRandomValue.setRandomValue(sudokuBoard);
             }
         } while (result);
     }
