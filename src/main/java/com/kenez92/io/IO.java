@@ -1,7 +1,6 @@
 package com.kenez92.io;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,14 +8,21 @@ public class IO {
     private static final String INFO_SIZE_OF_THE_BOARD = "What size of the board do you want (2 - 9)? : ";
     private static final String ERR_NUMBERS_ARE_NOT_GOOD = "Please put properly number (2 - 9) : ";
     private static final String INFO_PLAYER_MOVE_INPUT = "Where do you want to put number ? (x, y, value) :";
-    private static final String ERR_INPUT_LIST_IS_NOT_EQUAL_TO_3 = "Please put only three numbers (x, y and value)";
     private static final String SUDOKU = "SUDOKU";
-    private static final String ERR_BAD_VALUE = "Please put only numbers (x, y and value)";
-    private static final String ERR_VALUE_IS_BIGGER_THAN_BOARD_SIZE = "Your number is bigger than board! Put properly numbers :";
+    private static final String BACK = "BACK";
+    private static final String CLEAR = "CLEAR";
+    private static final String EXIT = "EXIT";
+    private static final String HINT = "HINT";
+    private static final String PLAYER_MOVE = "PLAYER_MOVE";
     private static final String ERR_BAD_PLAYER_MOVE = "This field is not empty !";
     private static final String INFO_PLAY_AGAIN = "Do you want to play again ? (y = yes, n = no)";
     public static final String ERR_PLAY_AGAIN = "Please type 'y' to play again or 'n' to finish game";
+    public static final String INFO_PLAYER_OPTION = "\nType : \"back\" to get back last move\n" +
+            "Type \"clear\", to start new game\n" + "Type \"exit\" to close game" + "Type \"hint\" to get hint\n" +
+            "Type \"SUDOKU\" to resolve sudoku\n" + "TYPE \"move\" to make new move\n";
+    public static final String ERR_I_DONT_UNDERSTAND = "Sorry I dont understand your answer... ";
     private final Scanner scanner = new Scanner(System.in);
+    private final IOService ioService = new IOService();
 
     public int getSudokuSize() {
         System.out.println(INFO_SIZE_OF_THE_BOARD);
@@ -43,38 +49,11 @@ public class IO {
         }
         List<Integer> resultList = new ArrayList<>();
         do {
-            resultList = convertToIntegers(move, boardSize * boardSize);
+            resultList = ioService.convertToIntegers(move, boardSize * boardSize);
             if (resultList.size() != 3) {
                 move = scanner.nextLine();
             }
         } while (resultList.size() != 3);
-        return resultList;
-    }
-
-    private List<Integer> convertToIntegers(String input, int boardSize) {
-        List<String> numbers = Arrays.asList(input.split(" |,"));
-        List<Integer> resultList = new ArrayList<>();
-        if (numbers.size() != 3) {
-            System.out.println(ERR_INPUT_LIST_IS_NOT_EQUAL_TO_3);
-            return new ArrayList<>();
-        }
-        for (String element : numbers) {
-            for (int i = 0; i < element.length(); i++) {
-                char character = element.charAt(i);
-                byte characterCode = (byte) character;
-                if (!(characterCode >= 38 && characterCode <= 57)) {
-                    System.out.println(ERR_BAD_VALUE);
-                    return new ArrayList<>();
-                }
-            }
-            int number = Integer.parseInt(element);
-            if (number > 0 && number <= boardSize) {
-                resultList.add(number);
-            } else {
-                System.out.println(ERR_VALUE_IS_BIGGER_THAN_BOARD_SIZE);
-                return new ArrayList<>();
-            }
-        }
         return resultList;
     }
 
@@ -93,6 +72,29 @@ public class IO {
             } else {
                 System.out.println(ERR_PLAY_AGAIN);
                 answer = scanner.nextLine();
+            }
+        }
+    }
+
+    public IOEnum getPlayerChoice() {
+        System.out.println(INFO_PLAYER_OPTION);
+        String input = scanner.nextLine().toUpperCase();
+        while (true) {
+            switch (input) {
+                case BACK:
+                    return IOEnum.BACK;
+                case SUDOKU:
+                    return IOEnum.SUDOKU;
+                case EXIT:
+                    return IOEnum.EXIT;
+                case HINT:
+                    return IOEnum.HINT;
+                case CLEAR:
+                    return IOEnum.CLEAR;
+                case PLAYER_MOVE:
+                    return IOEnum.PLAYER_MOVE;
+                default:
+                    System.out.println(ERR_I_DONT_UNDERSTAND);
             }
         }
     }
