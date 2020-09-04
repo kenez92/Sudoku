@@ -17,8 +17,8 @@ public class SudokuResolver {
             conditionResult = false;
             for (SudokuRow sudokuRow : sudokuBoard.getSudokuRowList()) {
                 for (SudokuElement sudokuElement : sudokuRow.getSudokuElementList()) {
+                    numberRemover.excludeTakenNumbers(sudokuBoard, sudokuElement);
                     if (sudokuElement.getValue() == SudokuElement.EMPTY_VALUE) {
-                        numberRemover.excludeTakenNumbers(sudokuBoard, sudokuElement);
                         conditionResult = conditions.process(sudokuElement, sudokuBoard);
                         if (conditionResult == true && result == false) {
                             result = true;

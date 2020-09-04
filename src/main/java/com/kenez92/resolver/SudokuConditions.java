@@ -4,11 +4,13 @@ import com.kenez92.backtrack.BackTrack;
 import com.kenez92.backtrack.LastMove;
 import com.kenez92.board.SudokuBoard;
 import com.kenez92.board.SudokuElement;
-import com.kenez92.board.SudokuRow;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class SudokuConditions {
+    private final SudokuElementsInSection sudokuElementsInSection = new SudokuElementsInSection();
+
     public boolean process(SudokuElement sudokuElement, SudokuBoard sudokuBoard) {
         if (noAvailableNumbers(sudokuElement, sudokuBoard)) {
             return true;
@@ -31,40 +33,48 @@ public class SudokuConditions {
 
     private boolean notAvailableInOtherFields(SudokuElement sudokuElement, SudokuBoard sudokuBoard) {
         HashSet<Integer> availableNumbersInOtherFields = new HashSet<>();
-        for (SudokuRow sudokuRow : sudokuBoard.getSudokuRowList()) {
-            for (SudokuElement element : sudokuRow.getSudokuElementList()) {
-                if (element != sudokuElement) {
-                    availableNumbersInOtherFields.addAll(sudokuElement.getAvailableNumbers());
-                }
-            }
+        if (sudokuElement.getAvailableNumbers().size() > 1) {
+            List<SudokuElement> rowElements = sudokuElementsInSection.row(sudokuBoard, sudokuElement.getPositionY());
+            rowElements.remove(sudokuElement);
+            List<SudokuElement> columnElements = sudokuElementsInSection.column(sudokuBoard, sudokuElement.getPositionX());
+            columnElements.remove(sudokuElement);
+            List<SudokuElement> blockElements = sudokuElementsInSection.block(sudokuBoard, sudokuElement.getPositionX(),
+                    sudokuElement.getPositionY());
+            blockElements.remove(sudokuElement);
+
+            availableNumbersInOtherFields.addAll(getAvailableNumbersInSection(rowElements));
+            availableNumbersInOtherFields.addAll(getAvailableNumbersInSection(columnElements));
+            availableNumbersInOtherFields.addAll(getAvailableNumbersInSection(blockElements));
         }
-        for (Integer availableNumber : sudokuElement.getAvailableNumbers()) {
-            if (!availableNumbersInOtherFields.contains(availableNumber)) {
-                sudokuElement.setValue(availableNumber);
-                return true;
+        if (availableNumbersInOtherFields.size() > 0) {
+            for (Integer number : sudokuElement.getAvailableNumbers()) {
+                if (!availableNumbersInOtherFields.contains(number)) {
+                    sudokuElement.setValue(number);
+                    sudokuElement.getValue();
+                    LastMove lastMove = new LastMove(sudokuElement.getPositionX(), sudokuElement.getPositionY(), number);
+                    BackTrack.getInstance().addBackTrack(sudokuBoard, lastMove);
+                    return true;
+                }
+
             }
         }
         return false;
     }
+
 
     private boolean noAvailableNumbers(SudokuElement sudokuElement, SudokuBoard sudokuBoard) {
         boolean result = false;
         if (sudokuElement.getAvailableNumbers().size() == 0) {
-            result = makeBackTrack(sudokuBoard);
+            result = BackTrack.getInstance().doBackTrack(sudokuBoard);
         }
         return result;
     }
 
-    public boolean makeBackTrack(SudokuBoard sudokuBoard) {
-        if (BackTrack.getInstance().getSudokuBoards().size() > 0 && BackTrack.getInstance().getLastMoves().size() > 0) {
-            SudokuBoard backSudokuBoard = BackTrack.getInstance().getSudokuBoards().pollFirst();
-            LastMove lastMove = BackTrack.getInstance().getLastMoves().pollFirst();
-            SudokuElement sudokuElement = backSudokuBoard.getSudokuRowList().get(lastMove.getPositionY())
-                    .getSudokuElementList().get(lastMove.getPositionX());
-            sudokuElement.getAvailableNumbers().remove(Integer.valueOf(lastMove.getValue()));
-            sudokuBoard.setSudokuRowList(backSudokuBoard.getSudokuRowList());
-            return true;
+    private HashSet<Integer> getAvailableNumbersInSection(List<SudokuElement> sudokuElements) {
+        HashSet<Integer> availableNumbersInSection = new HashSet<>();
+        for (SudokuElement sudokuElement : sudokuElements) {
+            availableNumbersInSection.addAll(sudokuElement.getAvailableNumbers());
         }
-        return false;
+        return availableNumbersInSection;
     }
 }
