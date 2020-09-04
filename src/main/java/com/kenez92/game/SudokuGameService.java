@@ -4,12 +4,14 @@ import com.kenez92.backtrack.BackTrack;
 import com.kenez92.backtrack.LastMove;
 import com.kenez92.board.SudokuBoard;
 import com.kenez92.board.SudokuElement;
+import com.kenez92.resolver.SudokuRandomValue;
 import com.kenez92.resolver.SudokuResolver;
 
 import java.util.List;
 
 public class SudokuGameService {
     private final SudokuResolver sudokuResolver = new SudokuResolver();
+    private final SudokuRandomValue sudokuRandomValue = new SudokuRandomValue();
 
 
     public boolean putNumberIntoBoard(List<Integer> playerMove, SudokuBoard sudokuBoard) {
@@ -30,5 +32,9 @@ public class SudokuGameService {
 
     public void resolve(SudokuBoard sudokuBoard) {
         sudokuResolver.process(sudokuBoard);
+    }
+
+    public void getHint(SudokuBoard sudokuBoard) {
+        sudokuRandomValue.setRandomValue(sudokuBoard);
     }
 }

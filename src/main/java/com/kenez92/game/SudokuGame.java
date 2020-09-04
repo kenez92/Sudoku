@@ -32,7 +32,8 @@ public class SudokuGame {
                     System.out.println(sudokuBoard);
                     break;
                 case HINT:
-                    //make hint;
+                    sudokuGameService.getHint(sudokuBoard);
+                    System.out.println(sudokuBoard);
                     break;
                 case CLEAR:
                     return false;
