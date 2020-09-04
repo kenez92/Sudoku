@@ -1,16 +1,16 @@
 package com.kenez92.game;
 
+import com.kenez92.backtrack.BackTrack;
 import com.kenez92.board.SudokuBoard;
-import com.kenez92.board.SudokuElement;
 import com.kenez92.controller.SudokuController;
-import com.kenez92.resolver.SudokuResolver;
+import com.kenez92.io.IOEnum;
 
 import java.util.List;
 
 public class SudokuGame {
     private final SudokuController sudokuController = new SudokuController();
-    private SudokuBoard sudokuBoard = new SudokuBoard(3);
-    private final SudokuResolver sudokuResolver = new SudokuResolver();
+    private SudokuBoard sudokuBoard;
+    private final SudokuGameService sudokuGameService = new SudokuGameService();
 
     public SudokuBoard getSudokuBoard() {
         return sudokuBoard;
@@ -20,29 +20,33 @@ public class SudokuGame {
         sudokuBoard = sudokuController.createSudokuBoard();
         System.out.println(sudokuBoard);
         do {
-            if (putNumberIntoBoard(sudokuController.getPlayerMove(sudokuBoard.getSize()))) {
-                System.out.println(sudokuBoard);
-            } else {
-                sudokuController.badPlayerMove();
+            IOEnum choice = sudokuController.getPlayerChoice();
+            switch (choice) {
+                case BACK:
+                    BackTrack.getInstance().doBackTrack(sudokuBoard);
+                    break;
+                case HINT:
+                    //make hint;
+                    break;
+                case CLEAR:
+                    //make new sudoku game;
+                    break;
+                case EXIT:
+                    //exit
+                    break;
+                case SUDOKU:
+                    sudokuGameService.resolve(sudokuBoard);
+                    break;
+                case PLAYER_MOVE:
+                    List<Integer> playerMove = sudokuController.getPlayerMove(sudokuBoard.getSize());
+                    if (sudokuGameService.putNumberIntoBoard(playerMove, sudokuBoard)) {
+                        System.out.println(sudokuBoard);
+                    } else {
+                        sudokuController.badPlayerMove();
+                    }
+                    break;
             }
         } while (sudokuBoard.countEmptyFields() > 0);
         return sudokuController.playAgain();
-    }
-
-    public boolean putNumberIntoBoard(List<Integer> playerMove) {
-        if (playerMove.size() == 0) {
-            sudokuResolver.process(sudokuBoard);
-        } else {
-            SudokuElement sudokuElement = sudokuBoard.getSudokuRowList()
-                    .get(playerMove.get(1) - 1)
-                    .getSudokuElementList().get(playerMove.get(0) - 1);
-            if (sudokuElement.getValue() == SudokuElement.EMPTY_VALUE) {
-                sudokuElement.setValue(playerMove.get(2));
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return true;
     }
 }
