@@ -6,21 +6,22 @@ import java.util.Scanner;
 
 public class IO {
     private static final String INFO_SIZE_OF_THE_BOARD = "What size of the board do you want (2 - 9)? : ";
-    private static final String ERR_NUMBERS_ARE_NOT_GOOD = "Please put properly number (2 - 9) : ";
     private static final String INFO_PLAYER_MOVE_INPUT = "Where do you want to put number ? (x, y, value) :";
+    private static final String INFO_PLAY_AGAIN = "Do you want to play again ? (y = yes, n = no)";
+    private static final String INFO_PLAYER_OPTION = "\nType \"back\" to get back last move\n" +
+            "Type \"clear\", to start new game\n" + "Type \"exit\" to close game" + "Type \"hint\" to get hint\n" +
+            "Type \"SUDOKU\" to resolve sudoku\n" + "TYPE \"move\" to make new move\n";
+    private static final String ERR_NUMBERS_ARE_NOT_GOOD = "Please put properly number (2 - 9) : ";
+    private static final String ERR_BAD_PLAYER_MOVE = "This field is not empty !";
+    private static final String ERR_PLAY_AGAIN = "Please type 'y' to play again or 'n' to finish game";
+    private static final String ERR_I_DONT_UNDERSTAND = "Sorry I dont understand your answer... ";
     private static final String SUDOKU = "SUDOKU";
     private static final String BACK = "BACK";
     private static final String CLEAR = "CLEAR";
     private static final String EXIT = "EXIT";
     private static final String HINT = "HINT";
-    private static final String PLAYER_MOVE = "PLAYER_MOVE";
-    private static final String ERR_BAD_PLAYER_MOVE = "This field is not empty !";
-    private static final String INFO_PLAY_AGAIN = "Do you want to play again ? (y = yes, n = no)";
-    public static final String ERR_PLAY_AGAIN = "Please type 'y' to play again or 'n' to finish game";
-    public static final String INFO_PLAYER_OPTION = "\nType : \"back\" to get back last move\n" +
-            "Type \"clear\", to start new game\n" + "Type \"exit\" to close game" + "Type \"hint\" to get hint\n" +
-            "Type \"SUDOKU\" to resolve sudoku\n" + "TYPE \"move\" to make new move\n";
-    public static final String ERR_I_DONT_UNDERSTAND = "Sorry I dont understand your answer... ";
+    private static final String PLAYER_MOVE = "MOVE";
+
     private final Scanner scanner = new Scanner(System.in);
     private final IOService ioService = new IOService();
 
@@ -78,8 +79,8 @@ public class IO {
 
     public IOEnum getPlayerChoice() {
         System.out.println(INFO_PLAYER_OPTION);
-        String input = scanner.nextLine().toUpperCase();
         while (true) {
+            String input = scanner.nextLine().toUpperCase();
             switch (input) {
                 case BACK:
                     return IOEnum.BACK;
@@ -95,6 +96,7 @@ public class IO {
                     return IOEnum.PLAYER_MOVE;
                 default:
                     System.out.println(ERR_I_DONT_UNDERSTAND);
+                    break;
             }
         }
     }

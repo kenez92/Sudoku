@@ -1,5 +1,7 @@
 package com.kenez92.game;
 
+import com.kenez92.backtrack.BackTrack;
+import com.kenez92.backtrack.LastMove;
 import com.kenez92.board.SudokuBoard;
 import com.kenez92.board.SudokuElement;
 import com.kenez92.resolver.SudokuResolver;
@@ -16,7 +18,11 @@ public class SudokuGameService {
                     .get(playerMove.get(1) - 1)
                     .getSudokuElementList().get(playerMove.get(0) - 1);
             if (sudokuElement.getValue() == SudokuElement.EMPTY_VALUE) {
+                LastMove lastMove = new LastMove(sudokuElement.getPositionX(), sudokuElement.getPositionY(),
+                        playerMove.get(2));
+                BackTrack.getInstance().addBackTrack(sudokuBoard, lastMove);
                 sudokuElement.setValue(playerMove.get(2));
+                return true;
             }
         }
         return false;

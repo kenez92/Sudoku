@@ -12,6 +12,11 @@ public class SudokuGame {
     private SudokuBoard sudokuBoard;
     private final SudokuGameService sudokuGameService = new SudokuGameService();
 
+    public SudokuGame() {
+        BackTrack.getInstance().getLastMoves().clear();
+        BackTrack.getInstance().getSudokuBoards().clear();
+    }
+
     public SudokuBoard getSudokuBoard() {
         return sudokuBoard;
     }
@@ -24,18 +29,19 @@ public class SudokuGame {
             switch (choice) {
                 case BACK:
                     BackTrack.getInstance().doBackTrack(sudokuBoard);
+                    System.out.println(sudokuBoard);
                     break;
                 case HINT:
                     //make hint;
                     break;
                 case CLEAR:
-                    //make new sudoku game;
-                    break;
+                    return false;
                 case EXIT:
-                    //exit
+                    System.exit(0);
                     break;
                 case SUDOKU:
                     sudokuGameService.resolve(sudokuBoard);
+                    System.out.println(sudokuBoard);
                     break;
                 case PLAYER_MOVE:
                     List<Integer> playerMove = sudokuController.getPlayerMove(sudokuBoard.getSize());
