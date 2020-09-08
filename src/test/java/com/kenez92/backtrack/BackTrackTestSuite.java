@@ -1,15 +1,18 @@
 package com.kenez92.backtrack;
 
-import com.kenez92.backtrack.BackTrack;
-import com.kenez92.backtrack.LastMove;
 import com.kenez92.board.SudokuBoard;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class BackTrackTestSuite {
 
+    @After
+    public void clearBackTrack() {
+        BackTrack.getInstance().clearBackTrack();
+    }
     @Test
-    public void testAddBackTrack() throws CloneNotSupportedException {
+    public void testAddBackTrack() {
         //Given
         LastMove lastMove = new LastMove(1, 1, 1);
         SudokuBoard sudokuBoard = new SudokuBoard(3);

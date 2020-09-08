@@ -2,7 +2,6 @@ package com.kenez92.resolver;
 
 import com.kenez92.board.SudokuBoard;
 import com.kenez92.board.SudokuElement;
-import com.kenez92.resolver.SudokuResolver;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -72,7 +71,6 @@ public class SudokuResolverTestSuite {
                 blockLists.add(blockList);
             }
         }
-        System.out.println(sudokuBoard);
         //Then
         for (List<Integer> rowList : rowLists) {
             int size = rowList.size();

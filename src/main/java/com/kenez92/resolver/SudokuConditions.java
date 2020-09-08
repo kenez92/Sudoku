@@ -10,9 +10,13 @@ import java.util.List;
 
 public class SudokuConditions {
     private final SudokuElementsInSection sudokuElementsInSection = new SudokuElementsInSection();
+    private final DuplicatesValidator duplicatesValidator = new DuplicatesValidator();
 
     public boolean process(SudokuElement sudokuElement, SudokuBoard sudokuBoard) {
+        NumberRemover numberRemover = new NumberRemover();
         if (noAvailableNumbers(sudokuElement, sudokuBoard)) {
+            return true;
+        } else if (checkForDuplicates(sudokuBoard)) {
             return true;
         } else if (onlyOneAvailableNumber(sudokuElement)) {
             return true;
@@ -76,5 +80,14 @@ public class SudokuConditions {
             availableNumbersInSection.addAll(sudokuElement.getAvailableNumbers());
         }
         return availableNumbersInSection;
+    }
+
+    private boolean checkForDuplicates(SudokuBoard sudokuBoard) {
+        if (duplicatesValidator.process(sudokuBoard)) {
+            BackTrack.getInstance().doBackTrack(sudokuBoard);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

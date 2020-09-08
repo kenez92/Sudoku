@@ -1,8 +1,8 @@
 package com.kenez92.backtrack;
 
-import com.kenez92.exception.SudokuException;
 import com.kenez92.board.SudokuBoard;
 import com.kenez92.board.SudokuElement;
+import com.kenez92.exception.SudokuException;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -64,5 +64,10 @@ public class BackTrack {
             return true;
         }
         return false;
+    }
+
+    public void clearBackTrack() {
+        sudokuBoards.clear();
+        lastMoves.clear();
     }
 }

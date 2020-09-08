@@ -12,16 +12,12 @@ public class SudokuGame {
     private SudokuBoard sudokuBoard;
     private final SudokuGameService sudokuGameService = new SudokuGameService();
 
-    public SudokuGame() {
-        BackTrack.getInstance().getLastMoves().clear();
-        BackTrack.getInstance().getSudokuBoards().clear();
-    }
-
     public SudokuBoard getSudokuBoard() {
         return sudokuBoard;
     }
 
     public boolean process() {
+        BackTrack.getInstance().clearBackTrack();
         sudokuBoard = sudokuController.createSudokuBoard();
         System.out.println(sudokuBoard);
         do {
